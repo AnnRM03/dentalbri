@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width">
+
+ <title>Iniciar sesión</title>
+
+ <script type="module" src="lib/js/submitForm.js"></script>
+ <script type="module" src="lib/js/muestraError.js"></script>
+ <script type="module" src="./js/protege.js"></script>
+
+</head>
+
+<body onload="protege('srv/sesion-actual.php')
+  .then(sesion => {
+   if (sesion.cue !== '') {
+    location.href = 'perfil.html'
+   }
+  })
+  .catch(muestraError)">
+
+ <form id="login" onsubmit="submitForm('srv/login.php', event)
+   .then(sesion => location.href = 'perfil.html')
+   .catch(muestraError)">
+
+  <h1>Iniciar Sesión</h1>
+
+  <p><a href="perfil.html">Cancelar</a></p>
+
+  <p>
+   <label>
+    Cue
+    <input name="cue">
+   </label>
+  </p>
+
+  <p>
+   <label>
+    Match
+    <input type="password" name="match">
+   </label>
+  </p>
+
+  <p><button type="submit">Iniciar sesión</button></p>
+
+ </form>
+
+</body>
+
+</html>

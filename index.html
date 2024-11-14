@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width">
+
+ <title>Autenticación</title>
+
+ <script type="module" src="lib/js/muestraError.js"></script>
+ <script type="module" src="./js/protege.js"></script>
+ <script type="module" src="./js/custom/mi-nav.js"></script>
+
+</head>
+
+<body onload="protege('srv/sesion-actual.php')
+  .then(sesion => nav.sesion = sesion)
+  .catch(muestraError)">
+
+ <mi-nav id="nav"></mi-nav>
+
+ <h1>Autenticación</h1>
+
+ <p>Bienvenid@.</p>
+
+</body>
+
+</html>

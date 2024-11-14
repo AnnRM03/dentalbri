@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width">
+
+ <title>Solo Clientes</title>
+
+ <script type="module" src="lib/js/consumeJson.js"></script>
+ <script type="module" src="lib/js/muestraError.js"></script>
+ <script type="module" src="./js/ROL_ID_CLIENTE.js"></script>
+ <script type="module" src="./js/protege.js"></script>
+ <script type="module" src="./js/custom/mi-nav.js"></script>
+
+</head>
+
+<body onload="protege('srv/sesion-actual.php', [ROL_ID_CLIENTE], 'index.html')
+   .then(sesion => {
+     nav.sesion = sesion
+     main.hidden = false
+    })
+   .catch(muestraError)">
+
+ <mi-nav id="nav"></mi-nav>
+
+ <main id="main" hidden>
+
+  <h1>Solo Clientes</h1>
+
+  <p>Hola.</p>
+
+  <p>
+   <button type="button" onclick="consumeJson('srv/saludo-cliente.php')
+     .then(saludo => alert(saludo.body))
+     .catch(muestraError)">
+    Ejecuta servicio
+   </button>
+  </p>
+
+ </main>
+
+</body>
+
+</html>
