@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Agregar Administrador</title>
+    <script type="module" src="lib/js/submitForm.js"></script>
+    <script type="module" src="lib/js/muestraError.js"></script>
+    <script type="module" src="./js/protege.js"></script>
+ <script type="module" src="./js/custom/mi-nav.js"></script>
+</head>
+<body>
+    <form onsubmit="submitForm('srv/administrador-agrega.php', event)
+        .then(modelo => location.href = 'indexAdmin.html')
+        .catch(muestraError)">
+
+        <h1>Agregar Administrador</h1>
+        <p><a href="indexAdmin.html">Cancelar</a></p>
+
+        <p>
+            <label>Nombre *<input name="nombre" required></label>
+        </p>
+        <p>
+            <label>Usuario *<input name="usuario" required></label>
+        </p>
+        <p>
+            <label>Correo *<input name="correo" type="email" required></label>
+        </p>
+        <p>
+            <label>Contraseña *<input name="contrasena" type="password" required></label>
+        </p>
+
+        <p>* Obligatorio</p>
+        <p><button type="submit">Agregar Administrador</button></p>
+
+    </form>
+</body>
+</html>

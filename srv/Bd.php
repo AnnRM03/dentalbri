@@ -97,13 +97,13 @@ class Bd
    }
   }
 
-  if (selectFirst(self::$pdo, USUARIO, [USU_CUE => "pepito"]) === false) {
+  if (selectFirst(self::$pdo, USUARIO, [USU_CUE => "Sara"]) === false) {
    insert(
     pdo: self::$pdo,
     into: USUARIO,
     values: [
-     USU_CUE => "pepito",
-     USU_MATCH => password_hash("cuentos", PASSWORD_DEFAULT)
+     USU_CUE => "Sara",
+     USU_MATCH => password_hash("123", PASSWORD_DEFAULT)
     ]
    );
    $usuId = self::$pdo->lastInsertId();
@@ -115,13 +115,13 @@ class Bd
    );
   }
 
-  if (selectFirst(self::$pdo, USUARIO, [USU_CUE => "susana"]) === false) {
+  if (selectFirst(self::$pdo, USUARIO, [USU_CUE => "Ann"]) === false) {
    insert(
     pdo: self::$pdo,
     into: USUARIO,
     values: [
-     USU_CUE => "susana",
-     USU_MATCH => password_hash("alegria", PASSWORD_DEFAULT)
+     USU_CUE => "Ann",
+     USU_MATCH => password_hash("admin", PASSWORD_DEFAULT)
     ]
    );
    $usuId = self::$pdo->lastInsertId();
@@ -133,13 +133,13 @@ class Bd
    );
   }
 
-  if (selectFirst(self::$pdo, USUARIO, [USU_CUE => "bebe"]) === false) {
+  if (selectFirst(self::$pdo, USUARIO, [USU_CUE => "Erika"]) === false) {
    insert(
     pdo: self::$pdo,
     into: USUARIO,
     values: [
-     USU_CUE => "bebe",
-     USU_MATCH => password_hash("saurio", PASSWORD_DEFAULT)
+     USU_CUE => "Erika",
+     USU_MATCH => password_hash("123", PASSWORD_DEFAULT)
     ]
    );
    $usuId = self::$pdo->lastInsertId();
