@@ -6,7 +6,7 @@ require_once __DIR__ . "/../lib/php/recuperaIdEntero.php";
 require_once __DIR__ . "/../lib/php/selectFirst.php";
 require_once __DIR__ . "/../lib/php/ProblemDetails.php";
 require_once __DIR__ . "/../lib/php/devuelveJson.php";
-require_once __DIR__ . "/Bd2.php";
+require_once __DIR__ . "/Bd.php";
 require_once __DIR__ . "/TABLA_ADMINISTRADOR.php";
 
 ejecutaServicio(function () {

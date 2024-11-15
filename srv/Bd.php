@@ -70,6 +70,20 @@ class Bd
       )'
    );
 
+   self::$pdo->exec(
+    "CREATE TABLE IF NOT EXISTS ADMINISTRADOR (
+        id_Administrador INTEGER,
+        nombre TEXT NOT NULL,
+        usuario TEXT NOT NULL,
+        correo TEXT NOT NULL,
+        contrasena TEXT NOT NULL,
+        CONSTRAINT ADMIN_PK PRIMARY KEY(id_Administrador),
+        CONSTRAINT ADMIN_CORREO_UNQ UNIQUE(correo),
+        CONSTRAINT ADMIN_USUARIO_UNQ UNIQUE(usuario),
+        CONSTRAINT ADMIN_NOM_NV CHECK(LENGTH(nombre) > 0)
+    )"
+);
+
    if (selectFirst(
     pdo: self::$pdo,
     from: ROL,

@@ -3,7 +3,7 @@
 require_once __DIR__ . "/../lib/php/ejecutaServicio.php";
 require_once __DIR__ . "/../lib/php/select.php";
 require_once __DIR__ . "/../lib/php/devuelveJson.php";
-require_once __DIR__ . "/Bd2.php";
+require_once __DIR__ . "/Bd.php";
 require_once __DIR__ . "/TABLA_ADMINISTRADOR.php";
 
 ejecutaServicio(function () {

@@ -6,7 +6,7 @@ require_once __DIR__ . "/../lib/php/recuperaTexto.php";
 require_once __DIR__ . "/../lib/php/validaNombre.php";
 require_once __DIR__ . "/../lib/php/update.php";
 require_once __DIR__ . "/../lib/php/devuelveJson.php";
-require_once __DIR__ . "/Bd2.php";
+require_once __DIR__ . "/Bd.php";
 require_once __DIR__ . "/TABLA_ADMINISTRADOR.php";
 
 ejecutaServicio(function () {
