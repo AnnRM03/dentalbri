@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width">
+
+ <title>Perfil</title>
+
+ <script type="module" src="lib/js/consumeJson.js"></script>
+ <script type="module" src="lib/js/muestraError.js"></script>
+ <script type="module" src="./js/protege.js"></script>
+ <script type="module" src="./js/custom/mi-nav.js"></script>
+
+</head>
+
+<body onload="protege('srv/sesion-actual.php')
+  .then(sesion => {
+   nav.sesion = sesion
+   const cue = sesion.cue
+   if (cue === '') {
+    login.hidden = false
+    outputCue.value = 'No ha iniciado sesión.'
+    outputRoles.value = ''
+   } else {
+    logout.hidden = false
+    outputCue.value = cue
+    const rolIds = sesion.rolIds
+    outputRoles.value = rolIds.size === 0
+     ? 'Sin roles'
+     : Array.from(rolIds).join(', ')
+   }
+  })
+  .catch(muestraError)">
+
+ <mi-nav id="nav"></mi-nav>
+
+ <h1>Perfil</h1>
+
+ <p>
+  <output id="outputCue">
+   <progress max="100">Cargando&hellip;</progress>
+  </output>
+ </p>
+
+ <p>
+  <output id="outputRoles">
+   <progress max="100">Cargando&hellip;</progress>
+  </output>
+ </p>
+
+ <p>
+
+  <a id="login" hidden href="login.html">Iniciar sesión</a>
+
+  <button type="button" id="logout" hidden
+    onclick="consumeJson('srv/logout.php')
+     .then(json => location.reload())
+     .catch(muestraError)">
+   Terminar sesión
+  </button>
+
+ </p>
+
+</body>
+
+</html>

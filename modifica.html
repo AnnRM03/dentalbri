@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Modificar</title>
+    <script type="module" src="lib/js/consumeJson.js"></script>
+    <script type="module" src="lib/js/submitForm.js"></script>
+    <script type="module" src="lib/js/muestraError.js"></script>
+    <script type="module" src="lib/js/muestraObjeto.js"></script>
+    <script>
+        // Obtiene los parámetros de la página.
+        const params = new URL(location.href).searchParams;
+    </script>
+</head>
+
+<body onload="if (params.size > 0) {
+    consumeJson('srv/rol-checkboxes.php')
+        .then(async checkBoxes => {
+            const modelo = await consumeJson('srv/usuario.php?' + params)
+            await muestraObjeto(document, checkBoxes.body)
+            await muestraObjeto(document, modelo.body)
+        })
+        .catch(muestraError)
+    }">
+
+    <form onsubmit="submitForm('srv/usuario-modifica.php', event)
+        .then(modelo => location.href = 'indexAdmin.html')
+        .catch(muestraError)">
+
+        <h1>Modificar</h1>
+
+        <p><a href="index.html">Cancelar</a></p>
+
+        <input type="hidden" name="id">
+
+        <p>
+            <label>
+                Cue *
+                <input name="cue" value="Cargando&hellip;">
+            </label>
+        </p>
+
+        <p>
+          <label>
+             Nueva contraseña
+             <input type="password" name="password">
+          </label>
+       </p>
+       
+
+        <fieldset>
+            <legend>Roles</legend>
+            <div id="roles">
+                <progress max="100">Cargando&hellip;</progress>
+            </div>
+        </fieldset>
+
+        <p>* Obligatorio</p>
+
+        <p>
+            <button type="submit">Guardar</button>
+            <button type="button" onclick="
+                if (params.size > 0 && confirm('Confirma la eliminación')) {
+                    consumeJson('srv/usuario-elimina.php?' + params)
+                        .then(() => location.href = 'indexAdmin.html')
+                        .catch(muestraError)
+                }">
+                Eliminar
+            </button>
+        </p>
+
+    </form>
+
+</body>
+
+</html>

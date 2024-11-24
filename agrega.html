@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Agregar</title>
+    <script type="module" src="lib/js/consumeJson.js"></script>
+    <script type="module" src="lib/js/submitForm.js"></script>
+    <script type="module" src="lib/js/muestraObjeto.js"></script>
+    <script type="module" src="lib/js/muestraError.js"></script>
+</head>
+<body onload="consumeJson('srv/rol-checkboxes.php')
+    .then(chackBoxes => muestraObjeto(document, chackBoxes.body))
+    .catch(muestraError)">
+    <form onsubmit="submitForm('srv/usuario-agrega.php', event)
+        .then(modelo => location.href = 'indexAdmin.html')
+        .catch(muestraError)">
+        <h1>Agregar</h1>
+        <p><a href="indexAdmin.html">Cancelar</a></p>
+        <p>
+            <label>
+                Cue *
+                <input name="cue" required>
+            </label>
+        </p>
+        <p>
+            <label>
+                Contraseña *
+                <input name="password" type="password" required>
+            </label>
+        </p>
+        <fieldset>
+            <legend>Roles</legend>
+            <div id="roles">
+                <progress max="100">Cargando&hellip;</progress>
+            </div>
+        </fieldset>
+        <p>* Obligatorio</p>
+        <p><button type="submit">Agregar</button></p>
+    </form>
+</body>
+</html>
