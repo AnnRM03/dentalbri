@@ -8,10 +8,10 @@ require_once __DIR__ . "/TABLA_ROL.php";
 require_once __DIR__ . "/TABLA_USU_ROL.php";
 require_once __DIR__ . "/ROL_ID_CLIENTE.php";
 require_once __DIR__ . "/ROL_ID_ADMINISTRADOR.php";
+require_once __DIR__ . "/ROL_ID_DENTISTA.php";
 
 class Bd
 {
-
     private static ?PDO $pdo = null;
 
     static function pdo(): PDO
@@ -24,6 +24,7 @@ class Bd
                 [PDO::ATTR_PERSISTENT => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
             );
 
+            // Crear tabla USUARIO
             self::$pdo->exec(
                 'CREATE TABLE IF NOT EXISTS USUARIO (
                   USU_ID INTEGER,
@@ -34,6 +35,8 @@ class Bd
                   CONSTRAINT USU_CUE_NV CHECK(LENGTH(USU_CUE) > 0)
                 )'
             );
+
+            // Crear tabla ROL
             self::$pdo->exec(
                 'CREATE TABLE IF NOT EXISTS ROL (
                   ROL_ID TEXT NOT NULL,
@@ -44,6 +47,8 @@ class Bd
                   CONSTRAINT ROL_DESCR_NV CHECK(LENGTH(ROL_DESCRIPCION) > 0)
                 )'
             );
+
+            // Crear tabla USU_ROL
             self::$pdo->exec(
                 'CREATE TABLE IF NOT EXISTS USU_ROL (
                    USU_ID INTEGER NOT NULL,
@@ -52,6 +57,20 @@ class Bd
                    CONSTRAINT USU_ROL_USU_FK FOREIGN KEY (USU_ID) REFERENCES USUARIO(USU_ID),
                    CONSTRAINT USU_ROL_ROL_FK FOREIGN KEY (ROL_ID) REFERENCES ROL(ROL_ID)
                 )'
+            );
+
+            // Insertar roles si no existen
+            self::$pdo->exec(
+                "INSERT OR IGNORE INTO ROL (ROL_ID, ROL_DESCRIPCION)
+                 VALUES 
+                 ('Dentista', 'Responsable de gestionar aspectos odontológicos');"
+            );
+
+            // Actualizar descripción del rol Cliente si existe
+            self::$pdo->exec(
+                "UPDATE ROL
+                 SET ROL_DESCRIPCION = 'Usuario que agenda citas.'
+                 WHERE ROL_ID = 'Cliente';"
             );
         }
 
