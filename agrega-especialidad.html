@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Agregar Especialidad</title>
+    <script type="module" src="lib/js/submitForm.js"></script>
+    <script type="module" src="lib/js/muestraError.js"></script>
+    <script type="module" src="lib/js/consumeJson.js"></script>
+    <script type="module" src="lib/js/muestraObjeto.js"></script>
+</head>
+<body>
+    <h1>Agregar Especialidad</h1>
+    <form onsubmit="submitForm('srv/especialidad-agrega.php', event)
+        .then(() => location.href = 'indexEspecialidad.html')
+        .catch(muestraError)">
+        <p>
+            <label>Nombre:
+                <input name="nombre" required>
+            </label>
+        </p>
+        <p><button type="submit">Agregar</button></p>
+    </form>
+</body>
+</html>

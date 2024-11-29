@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Modificar Especialidad</title>
+    <script type="module" src="lib/js/consumeJson.js"></script>
+    <script type="module" src="lib/js/submitForm.js"></script>
+    <script type="module" src="lib/js/muestraError.js"></script>
+    <script>
+        const params = new URL(location.href).searchParams;
+    </script>
+</head>
+<body onload="cargarDatos()">
+    <h1>Modificar Especialidad</h1>
+    <form onsubmit="submitForm('srv/especialidad-modifica.php', event)
+        .then(() => location.href = 'indexEspecialidad.html')
+        .catch(muestraError)">
+        <input type="hidden" name="id" id="id">
+        <p>
+            <label>Nombre:
+                <input name="nombre" id="nombre" required>
+            </label>
+        <p>
+            <button type="submit">Guardar</button>
+            <button type="button" onclick="
+                if (params.size > 0 && confirm('Confirma la eliminación')) {
+                    consumeJson('srv/especialidad-elimina.php?' + params)
+                        .then(() => location.href = 'indexEspecialidad.html')
+                        .catch(muestraError)
+                }">
+                Eliminar
+            </button>
+        </p>
+    </form>
+
+    <script>
+        async function cargarDatos() {
+            try {
+                const id = new URLSearchParams(window.location.search).get("id"); // Obtiene el ID de la URL
+                const response = await consumeJson(`srv/especialidad.php?id=${id}`); // Llama al endpoint con el ID
+                
+                // Asegúrate de que response.body.nombre sea un string
+                const nombre = typeof response.body.nombre === "object" 
+                    ? response.body.nombre.value 
+                    : response.body.nombre;
+    
+                // Asigna los valores al formulario
+                document.getElementById("id").value = id;
+                document.getElementById("nombre").value = nombre;
+            } catch (e) {
+                muestraError(e);
+            }
+        }
+    </script>
+    
+    
+</body>
+</html>

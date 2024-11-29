@@ -47,7 +47,8 @@ export class MiNav extends HTMLElement {
   */
  hipervinculosAdmin(rolIds) {
   return rolIds.has(ROL_ID_ADMINISTRADOR) ?
-   /* html */ `<li><a href="indexAdmin.html">Gestionar cuentas</a></li>`
+   /* html */ `<li><a href="indexAdmin.html">Gestionar cuentas</a></li>
+   <li><a href="indexEspecialidad.html">Gestionar especialidades</a></li>`
    : ""
  }
  

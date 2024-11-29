@@ -2,13 +2,14 @@
 
 require_once __DIR__ . "/INTERNAL_SERVER_ERROR.php";
 
-function devuelveResultadoNoJson()
-{
-
- http_response_code(INTERNAL_SERVER_ERROR);
- header("Content-Type: application/problem+json");
- echo '{' .
-  '"title": "El resultado no puede representarse como JSON."' .
-  '"type": "/error/resultadonojson.html"' .
-  '}';
+function devuelveResultadoNoJson() {
+  http_response_code(500);
+  header("Content-Type: application/problem+json");
+  echo json_encode([
+      "title" => "Error interno del servidor",
+      "detail" => "El resultado no pudo convertirse a JSON.",
+      "status" => 500,
+      "type" => "/error/errorinterno.html"
+  ]);
+  exit;
 }

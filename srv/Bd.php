@@ -74,6 +74,27 @@ class Bd
             );
         }
 
+        // Crear tabla ESPECIALIDAD
+        self::$pdo->exec(
+            'CREATE TABLE IF NOT EXISTS ESPECIALIDAD (
+                ESP_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                ESP_NOMBRE TEXT NOT NULL UNIQUE,
+                CONSTRAINT ESP_NOMBRE_NV CHECK(LENGTH(ESP_NOMBRE) > 0)
+            )'
+        );
+
+        // Crear tabla DENTISTA_ESPECIALIDAD
+        self::$pdo->exec(
+            'CREATE TABLE IF NOT EXISTS DENTISTA_ESPECIALIDAD (
+                DENTISTA_ID INTEGER NOT NULL,
+                ESP_ID INTEGER NOT NULL,
+                CONSTRAINT DEN_ESP_PK PRIMARY KEY (DENTISTA_ID, ESP_ID),
+                CONSTRAINT DEN_ESP_DEN_FK FOREIGN KEY (DENTISTA_ID) REFERENCES USUARIO (USU_ID),
+                CONSTRAINT DEN_ESP_ESP_FK FOREIGN KEY (ESP_ID) REFERENCES ESPECIALIDAD (ESP_ID)
+            )'
+        );
+
+
         return self::$pdo;
     }
 }

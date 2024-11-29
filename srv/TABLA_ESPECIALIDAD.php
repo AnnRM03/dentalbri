@@ -1,0 +1,4 @@
+<?php
+const ESPECIALIDAD = "ESPECIALIDAD";
+const ESP_ID = "ESP_ID";
+const ESP_NOMBRE = "ESP_NOMBRE";
