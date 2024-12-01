@@ -11,6 +11,10 @@ require_once __DIR__ . "/Bd.php";
 require_once __DIR__ . "/TABLA_USUARIO.php";
 require_once __DIR__ . "/TABLA_ROL.php";
 require_once __DIR__ . "/TABLA_USU_ROL.php";
+require_once __DIR__ . "/TABLA_DENTISTA.php";
+require_once __DIR__ . "/TABLA_ESPECIALIDAD_DENTISTA.php";
+require_once __DIR__ . "/TABLA_ESPECIALIDAD.php";
+
 
 ejecutaServicio(function () {
 

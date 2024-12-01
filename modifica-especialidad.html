@@ -7,6 +7,7 @@
     <script type="module" src="lib/js/consumeJson.js"></script>
     <script type="module" src="lib/js/submitForm.js"></script>
     <script type="module" src="lib/js/muestraError.js"></script>
+    <link rel="stylesheet" href="css/estilos.css">
     <script>
         const params = new URL(location.href).searchParams;
     </script>
@@ -21,30 +22,26 @@
             <label>Nombre:
                 <input name="nombre" id="nombre" required>
             </label>
-        <p>
-            <button type="submit">Guardar</button>
-            <button type="button" onclick="
-                if (params.size > 0 && confirm('Confirma la eliminación')) {
-                    consumeJson('srv/especialidad-elimina.php?' + params)
-                        .then(() => location.href = 'indexEspecialidad.html')
-                        .catch(muestraError)
-                }">
-                Eliminar
-            </button>
         </p>
+        <button type="submit">Guardar</button>
+        <button type="button" onclick="if (params.size > 0 && confirm('Confirma la eliminación')) {
+                consumeJson('srv/especialidad-elimina.php?' + params)
+                    .then(() => location.href = 'indexEspecialidad.html')
+                    .catch(muestraError)
+            }">
+            Eliminar
+        </button>
     </form>
 
     <script>
         async function cargarDatos() {
             try {
-                const id = new URLSearchParams(window.location.search).get("id"); // Obtiene el ID de la URL
-                const response = await consumeJson(`srv/especialidad.php?id=${id}`); // Llama al endpoint con el ID
-                
-                // Asegúrate de que response.body.nombre sea un string
-                const nombre = typeof response.body.nombre === "object" 
-                    ? response.body.nombre.value 
-                    : response.body.nombre;
-    
+                const id = new URLSearchParams(window.location.search).get("id");
+                const response = await consumeJson(`srv/especialidad.php?id=${id}`);
+
+                // Asegúrate de acceder correctamente al valor de "nombre"
+                const nombre = response.body.nombre?.value || "";
+
                 // Asigna los valores al formulario
                 document.getElementById("id").value = id;
                 document.getElementById("nombre").value = nombre;
@@ -53,7 +50,5 @@
             }
         }
     </script>
-    
-    
 </body>
 </html>

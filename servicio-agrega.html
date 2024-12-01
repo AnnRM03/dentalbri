@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Agregar Servicio</title>
+    <script type="module" src="lib/js/consumeJson.js"></script>
+    <script type="module" src="lib/js/submitForm.js"></script>
+    <script type="module" src="lib/js/muestraError.js"></script>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+    <form onsubmit="submitForm('srv/servicio-agrega.php', event)
+        .then(() => location.href = 'indexServicios.html')
+        .catch(muestraError)">
+        <h1>Agregar Servicio</h1>
+        <p><a href="indexServicios.html">Cancelar</a></p>
+        <p>
+            <label>
+                Nombre del Servicio *
+                <input name="nombre" required>
+            </label>
+        </p>
+        <p>
+            <label>
+                Descripción *
+                <textarea name="descripcion" required></textarea>
+            </label>
+        </p>
+        <p>
+            <label>
+                Precio *
+                <input type="number" name="precio" step="0.01" required>
+            </label>
+        </p>
+        <p>
+            <label>
+                Promoción
+                <input name="promocion">
+            </label>
+        </p>
+        <p>* Obligatorio</p>
+        <p><button type="submit">Agregar</button></p>
+    </form>
+</body>
+
+</html>

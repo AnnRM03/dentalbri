@@ -27,10 +27,9 @@ class Bd
             // Crear tabla USUARIO
             self::$pdo->exec(
                 'CREATE TABLE IF NOT EXISTS USUARIO (
-                  USU_ID INTEGER,
+                  USU_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                   USU_CUE TEXT NOT NULL,
                   USU_MATCH TEXT NOT NULL,
-                  CONSTRAINT USU_PK PRIMARY KEY(USU_ID),
                   CONSTRAINT USU_CUE_UNQ UNIQUE(USU_CUE),
                   CONSTRAINT USU_CUE_NV CHECK(LENGTH(USU_CUE) > 0)
                 )'
@@ -59,41 +58,53 @@ class Bd
                 )'
             );
 
-            // Insertar roles si no existen
+            // Crear tabla ESPECIALIDAD
             self::$pdo->exec(
-                "INSERT OR IGNORE INTO ROL (ROL_ID, ROL_DESCRIPCION)
-                 VALUES 
-                 ('Dentista', 'Responsable de gestionar aspectos odontológicos');"
+                'CREATE TABLE IF NOT EXISTS ESPECIALIDAD (
+                    ESP_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ESP_NOMBRE TEXT NOT NULL UNIQUE,
+                    CONSTRAINT ESP_NOMBRE_NV CHECK(LENGTH(ESP_NOMBRE) > 0)
+                )'
             );
 
-            // Actualizar descripción del rol Cliente si existe
+            // Crear tabla DENTISTA_ESPECIALIDAD
             self::$pdo->exec(
-                "UPDATE ROL
-                 SET ROL_DESCRIPCION = 'Usuario que agenda citas.'
-                 WHERE ROL_ID = 'Cliente';"
+                'CREATE TABLE IF NOT EXISTS DENTISTA_ESPECIALIDAD (
+                    DENTISTA_ID INTEGER NOT NULL,
+                    ESP_ID INTEGER NOT NULL,
+                    CONSTRAINT DEN_ESP_PK PRIMARY KEY (DENTISTA_ID, ESP_ID),
+                    CONSTRAINT DEN_ESP_DEN_FK FOREIGN KEY (DENTISTA_ID) REFERENCES USUARIO (USU_ID),
+                    CONSTRAINT DEN_ESP_ESP_FK FOREIGN KEY (ESP_ID) REFERENCES ESPECIALIDAD (ESP_ID)
+                )'
             );
+
+            // Crear tabla DENTISTA_DIAS
+            self::$pdo->exec(
+                'CREATE TABLE IF NOT EXISTS DENTISTA_DIAS (
+                    DENTISTA_ID INTEGER NOT NULL,
+                    DIA TEXT NOT NULL,
+                    CONSTRAINT DEN_DIA_PK PRIMARY KEY (DENTISTA_ID, DIA),
+                    CONSTRAINT DEN_DIA_DEN_FK FOREIGN KEY (DENTISTA_ID) REFERENCES USUARIO (USU_ID),
+                    CONSTRAINT DIA_VALIDA CHECK (DIA IN ("Lunes", "Martes", "Miércoles", "Jueves", "Viernes"))
+                )'
+            );
+
+            // Crear tabla SERVICIO
+            self::$pdo->exec(
+                'CREATE TABLE IF NOT EXISTS SERVICIO (
+                    SERVICIO_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    SERVICIO_NOMBRE TEXT NOT NULL,
+                    SERVICIO_DESCRIPCION TEXT NOT NULL,
+                    SERVICIO_PRECIO REAL NOT NULL,
+                    SERVICIO_PROMOCION TEXT,
+                    CONSTRAINT SERVICIO_NOMBRE_UNQ UNIQUE(SERVICIO_NOMBRE),
+                    CONSTRAINT SERVICIO_NOMBRE_NV CHECK(LENGTH(SERVICIO_NOMBRE) > 0),
+                    CONSTRAINT SERVICIO_DESCRIPCION_NV CHECK(LENGTH(SERVICIO_DESCRIPCION) > 0),
+                    CONSTRAINT SERVICIO_PRECIO_NV CHECK(SERVICIO_PRECIO > 0)
+                )'
+            );
+
         }
-
-        // Crear tabla ESPECIALIDAD
-        self::$pdo->exec(
-            'CREATE TABLE IF NOT EXISTS ESPECIALIDAD (
-                ESP_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                ESP_NOMBRE TEXT NOT NULL UNIQUE,
-                CONSTRAINT ESP_NOMBRE_NV CHECK(LENGTH(ESP_NOMBRE) > 0)
-            )'
-        );
-
-        // Crear tabla DENTISTA_ESPECIALIDAD
-        self::$pdo->exec(
-            'CREATE TABLE IF NOT EXISTS DENTISTA_ESPECIALIDAD (
-                DENTISTA_ID INTEGER NOT NULL,
-                ESP_ID INTEGER NOT NULL,
-                CONSTRAINT DEN_ESP_PK PRIMARY KEY (DENTISTA_ID, ESP_ID),
-                CONSTRAINT DEN_ESP_DEN_FK FOREIGN KEY (DENTISTA_ID) REFERENCES USUARIO (USU_ID),
-                CONSTRAINT DEN_ESP_ESP_FK FOREIGN KEY (ESP_ID) REFERENCES ESPECIALIDAD (ESP_ID)
-            )'
-        );
-
 
         return self::$pdo;
     }

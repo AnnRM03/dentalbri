@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Modificar Servicio</title>
+    <script type="module" src="lib/js/consumeJson.js"></script>
+    <script type="module" src="lib/js/submitForm.js"></script>
+    <script type="module" src="lib/js/muestraError.js"></script>
+    <script type="module" src="lib/js/muestraObjeto.js"></script>
+    <link rel="stylesheet" href="css/estilos.css">
+    <script>
+        const params = new URL(location.href).searchParams;
+    </script>
+</head>
+
+<body onload="if (params.size > 0) {
+    consumeJson('srv/servicio.php?' + params)
+        .then(modelo => muestraObjeto(document, modelo.body))
+        .catch(muestraError)
+    }">
+
+    <form onsubmit="submitForm('srv/servicio-modifica.php', event)
+        .then(() => location.href = 'indexServicios.html')
+        .catch(muestraError)">
+
+        <h1>Modificar Servicio</h1>
+        <p><a href="indexServicios.html">Cancelar</a></p>
+        
+        <input type="hidden" name="id">
+
+        <p>
+            <label>
+                Nombre del Servicio *
+                <input name="nombre" value="Cargando…" required>
+            </label>
+        </p>
+        <p>
+            <label>
+                Descripción *
+                <textarea name="descripcion" required>Cargando…</textarea>
+            </label>
+        </p>
+        <p>
+            <label>
+                Precio *
+                <input type="number" name="precio" step="0.01" value="Cargando…" required>
+            </label>
+        </p>
+        <p>
+            <label>
+                Promoción
+                <input name="promocion" value="Cargando…">
+            </label>
+        </p>
+        <p>* Obligatorio</p>
+        <p>
+            <button type="submit">Guardar</button>
+            <button type="button" onclick="
+                if (params.size > 0 && confirm('Confirma la eliminación')) {
+                    consumeJson('srv/servicio-elimina.php?' + params)
+                        .then(() => location.href = 'indexServicios.html')
+                        .catch(muestraError)
+                }">
+                Eliminar
+            </button>
+        </p>
+    </form>
+
+</body>
+
+</html>
